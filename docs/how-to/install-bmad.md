@@ -62,6 +62,16 @@ Pick which AI tools you use:
 
 Each tool has its own way of integrating skills. The installer creates tiny prompt files to activate workflows and agents — it just puts them where your tool expects to find them.
 
+:::note[Installing for Amp]
+Amp support is available via an interim package while upstream acceptance is pending:
+
+```bash
+npx @lacrymology/bmad-method install
+```
+
+Select **Amp** as your AI tool. Skills are installed to `.agents/skills/` in your project.
+:::
+
 :::note[Enabling Skills]
 Some platforms require skills to be explicitly enabled in settings before they appear. If you install BMad and don't see the skills, check your platform's settings or ask your AI assistant how to enable skills.
 :::

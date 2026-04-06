@@ -73,6 +73,12 @@ Available tool IDs for the `--tools` flag:
 
 **Preferred:** `claude-code`, `cursor`
 
+**Also supported:** `amp` — use the interim package command until upstream acceptance:
+
+```bash
+npx @lacrymology/bmad-method install --tools amp --yes
+```
+
 Run `npx bmad-method install` interactively once to see the full current list of supported tools, or check the [platform codes configuration](https://github.com/bmad-code-org/BMAD-METHOD/blob/main/tools/installer/ide/platform-codes.yaml).
 
 ## Installation Modes
@@ -85,6 +91,18 @@ Run `npx bmad-method install` interactively once to see the full current list of
 | Without tools | Skip tool/IDE configuration | `npx bmad-method install --modules bmm --tools none` |
 
 ## Examples
+
+### Amp Installation (Interim Package)
+
+```bash
+npx @lacrymology/bmad-method install \
+  --directory ~/projects/myapp \
+  --modules bmm \
+  --tools amp \
+  --yes
+```
+
+Skills are installed to `.agents/skills/` in the target directory.
 
 ### CI/CD Pipeline Installation
 

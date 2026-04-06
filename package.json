@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "bmad-method",
+  "name": "@lacrymology/bmad-method",
   "version": "6.2.2",
   "description": "Breakthrough Method of Agile AI-driven Development",
   "keywords": [

@@ -1867,6 +1867,57 @@ async function runTests() {
   console.log('');
 
   // ============================================================
+  // Suite 35: Amp Native Skills
+  // ============================================================
+  console.log(`${colors.yellow}Test Suite 35: Amp Native Skills${colors.reset}\n`);
+
+  try {
+    clearCache();
+    const platformCodes35 = await loadPlatformCodes();
+    const ampInstaller = platformCodes35.platforms.amp?.installer;
+
+    // Registry assertion
+    assert(ampInstaller?.target_dir === '.agents/skills', 'Amp target_dir uses native skills path');
+
+    const tempProjectDir35 = await fs.mkdtemp(path.join(os.tmpdir(), 'bmad-amp-test-'));
+    const installedBmadDir35 = await createTestBmadFixture();
+
+    const ideManager35 = new IdeManager();
+    await ideManager35.ensureInitialized();
+
+    // Setup assertion
+    const result35 = await ideManager35.setup('amp', tempProjectDir35, installedBmadDir35, {
+      silent: true,
+      selectedModules: ['bmm'],
+    });
+
+    assert(result35.success === true, 'Amp setup succeeds against temp project');
+
+    const skillFile35 = path.join(tempProjectDir35, '.agents', 'skills', 'bmad-master', 'SKILL.md');
+    assert(await fs.pathExists(skillFile35), 'Amp install writes SKILL.md directory output');
+
+    const skillContent35 = await fs.readFile(skillFile35, 'utf8');
+    const nameMatch35 = skillContent35.match(/^name:\s*(.+)$/m);
+    assert(nameMatch35 && nameMatch35[1].trim() === 'bmad-master', 'Amp skill name frontmatter matches directory name exactly');
+
+    // Idempotency assertion
+    const result35b = await ideManager35.setup('amp', tempProjectDir35, installedBmadDir35, {
+      silent: true,
+      selectedModules: ['bmm'],
+    });
+
+    assert(result35b.success === true, 'Amp reinstall/upgrade succeeds over existing skills');
+    assert(await fs.pathExists(skillFile35), 'Amp reinstall preserves SKILL.md output');
+
+    await fs.remove(tempProjectDir35);
+    await fs.remove(path.dirname(installedBmadDir35));
+  } catch (error) {
+    assert(false, 'Amp native skills test succeeds', error.message);
+  }
+
+  console.log('');
+
+  // ============================================================
   // Summary
   // ============================================================
   console.log(`${colors.cyan}========================================`);

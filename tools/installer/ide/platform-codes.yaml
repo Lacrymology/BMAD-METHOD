@@ -10,6 +10,12 @@
 #     ancestor_conflict_check: (optional) Refuse install when ancestor dir has BMAD files
 
 platforms:
+  amp:
+    name: "Amp"
+    preferred: false
+    installer:
+      target_dir: .agents/skills
+
   antigravity:
     name: "Google Antigravity"
     preferred: false
